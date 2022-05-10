@@ -1,4 +1,3 @@
 # ProgettoSUDOKU
 
-SW4EDRTFGYUHJIKOL
-erytuio
+Ciao
