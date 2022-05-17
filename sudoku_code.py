@@ -1,4 +1,5 @@
 import pygame
+import requests
 
 WIDTH = 555
 HEIGHT = 655
@@ -63,8 +64,18 @@ class text:
 
 
 # call back functions
-def fn1():
-    print('check')
+def getSudoku():
+    response = requests.get("https://sugoku.herokuapp.com/board?difficulty=easy")
+    matrix = response.json()
+    return matrix
+
+
+def showSudoku():
+    matrix = getSudoku()
+    for i in range (len(matrix['board'][0])):
+        for j in range (len(matrix['board'][0])):
+            print(matrix['board'][j][i], end = " ")
+        print("\n")
 
 
 def fn2():
@@ -72,6 +83,7 @@ def fn2():
 
 
 def main():
+    showSudoku()
     pygame.init()
     SCHERMO = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Sudoku")
@@ -82,7 +94,7 @@ def main():
             pygame.draw.line(SCHERMO, (10, 10, 10), (50, 50 + 50 * i), (500, 50 + 50 * i), 4)
         pygame.draw.line(SCHERMO, (100, 10, 10), (50 + 50 * i, 50), (50 + 50 * i, 500), 2)
         pygame.draw.line(SCHERMO, (100, 10, 10), (50, 50 + 50 * i), (500, 50 + 50 * i), 2)
-    button1 = button((200, 600), (100, 50), (220, 220, 220), (255, 0, 0), fn1, 'CHECK')
+    button1 = button((200, 600), (100, 50), (220, 220, 220), (255, 0, 0), showSudoku, 'CHECK')
     button2 = button((350, 600), (100, 50), (220, 220, 220), (255, 0, 0), fn2, 'SOLUTION')
 
     button_list = [button1, button2]
@@ -102,4 +114,5 @@ def main():
                 return
 
 
-main()
+if __name__ == "__main__":
+    main()
