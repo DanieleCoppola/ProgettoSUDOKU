@@ -103,12 +103,12 @@ def insert(win, position):
                     return
                 if event.key == 48:
                     grid[i - 1][j - 1] = event.key - 48
-                    pygame.draw.rect(win, background_color, (
+                    pygame.draw.rect(win, (124,252,0), (
                         position[0] * 50 + buffer, position[1] * 50 + buffer, 50 - 2 * buffer, 50 - 2 * buffer))
                     pygame.display.update()
                     return
                 if 0 < event.key - 48 < 10:
-                    pygame.draw.rect(win, background_color, (
+                    pygame.draw.rect(win, (124,252,0), (
                         position[0] * 50 + buffer, position[1] * 50 + buffer, 50 - 2 * buffer, 50 - 2 * buffer))
                     value = myfont.render(str(event.key - 48), True, (0, 0, 0))
                     win.blit(value, (position[0] * 50 + 15, position[1] * 50))
@@ -121,10 +121,10 @@ def insert2(win, position,num):
     i, j = position[1], position[0]
     myfont = pygame.font.SysFont('Comic Sans MS', 35)
     grid[i - 1][j - 1] = num
-    pygame.draw.rect(win, background_color, (
+    pygame.draw.rect(win, (255,0,0), (
         position[0] * 50 + buffer, position[1] * 50 + buffer, 50 - 2 * buffer, 50 - 2 * buffer))
     pygame.display.update()
-    pygame.draw.rect(win, background_color, (
+    pygame.draw.rect(win, (255,0,0), (
         position[0] * 50 + buffer, position[1] * 50 + buffer, 50 - 2 * buffer, 50 - 2 * buffer))
     value = myfont.render(str(num), True, (0, 0, 0))
     win.blit(value, (position[0] * 50 + 15, position[1] * 50))
@@ -166,9 +166,7 @@ def main():
     win.fill(background_color)
     myfont = pygame.font.SysFont('Comic Sans MS', 35)
     text = set_text("SUDOKUUU!", 280, 25, 30)
-    text2 = set_text("Premi r per verificare il sudoku!", 270, 600, 30)
     win.blit(text[0], text[1])
-    win.blit(text2[0], text2[1])
     for i in range(0, 10):
         if i % 3 == 0:
             pygame.draw.line(win, (0, 0, 0), (50 + 50 * i, 50), (50 + 50 * i, 500), 4)
@@ -190,11 +188,8 @@ def main():
                 pos = pygame.mouse.get_pos()
                 insert(win, (pos[0] // 50, pos[1] // 50))
                 if valid_board(grid):
-                    pygame.draw.rect(win, (245, 255, 0), (
-                        pos[0] * 50 + buffer, pos[1] * 50 + buffer, 50 - 2 * buffer, 50 - 2 * buffer))
                     insert(win, (pos[0] // 50, pos[1] // 50))
-                    pygame.draw.rect(win, (245,255,0), (
-                        pos[0] * 50 + buffer, pos[1] * 50 + buffer, 50 - 2 * buffer, 50 - 2 * buffer))
+
                     pygame.display.update()
                 else:
                     insert2(win, (pos[0] // 50, pos[1] // 50),0)
@@ -204,15 +199,6 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_r:
-                    if valid_board(grid):
-                        text4 = set_text("correct", 270, 650, 30)
-                        win.blit(text4[0], text4[1])
-                        pygame.display.update()
-                    else:
-                        text4 = set_text("incorrect", 270, 650, 30)
-                        win.blit(text4[0], text4[1])
-                        pygame.display.update()
+
 
 main()
